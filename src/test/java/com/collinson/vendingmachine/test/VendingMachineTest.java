@@ -46,6 +46,7 @@ public class VendingMachineTest {
         assertEquals(Item.COKE, item);
         //there should not be any change
         assertTrue(change.isEmpty());
+        vendingMachine.refund();
     }
 
     @Test
@@ -62,6 +63,7 @@ public class VendingMachineTest {
         assertTrue(!change.isEmpty());
         //comparing change
         assertEquals(50 - Item.SODA.getPrice(), getTotal(change));
+        vendingMachine.refund();
     }
 
     @Test
@@ -80,10 +82,12 @@ public class VendingMachineTest {
         VendingMachine machine = VendingMachineFactory.createVendingMachine();
         machine.reset();
         machine.selectItemAndGetPrice(Item.COKE);
+        vendingMachine.refund();
     }
 
     @Test(expected = SoldOutException.class)
     public void testSoldOut() {
+        vendingMachine.refund();
         for (int i = 0; i < 5; i++) {
             vendingMachine.selectItemAndGetPrice(Item.COKE);
             vendingMachine.insertCoin(Coin.QUARTER);
@@ -93,6 +97,7 @@ public class VendingMachineTest {
 
     @Test(expected = NotSufficientChangeException.class)
     public void testNotSufficientChangeException() {
+        vendingMachine.refund();
         for (int i = 0; i < 5; i++) {
             vendingMachine.selectItemAndGetPrice(Item.SODA);
             vendingMachine.insertCoin(Coin.QUARTER);
@@ -107,6 +112,7 @@ public class VendingMachineTest {
 
     @Test(expected = NotFullPaidException.class)
     public void testNotFullPaidException() {
+        vendingMachine.refund();
         vendingMachine.selectItemAndGetPrice(Item.SODA);
         vendingMachine.insertCoin(Coin.PENNY);
         vendingMachine.collectItemAndChange();
