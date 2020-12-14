@@ -1,4 +1,4 @@
-package com.collinson.vendingmachine.test;
+package com.collinson.vendingmachine;
 
 import com.collinson.vendingmachine.entity.Bucket;
 import com.collinson.vendingmachine.entity.Coin;
